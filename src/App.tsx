@@ -1,23 +1,15 @@
 import axios from "axios";
 import React from "react";
+import { List } from "./List";
+import { SearchForm } from "./SearchForm";
 
-type Story = {
+export type Story = {
   objectID: string;
   url: string;
   title: string;
   author: string;
   num_comments: number;
   points: number;
-};
-
-type ItemProps = {
-  item: Story;
-  onRemoveItem: (item: Story) => void;
-};
-
-type ListProps = {
-  list: Story[];
-  onRemoveItem: (item: Story) => void;
 };
 
 type StoriesFetchInitAction = {
@@ -46,21 +38,6 @@ type StoriesAction =
   | StoriesFetchSuccessAction
   | StoriesFetchFailureAction
   | StoriesRemoveAction;
-
-type SearchFormProps = {
-  searchTerm: string;
-  onSearchInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSearchSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-};
-
-type InputWithLabelProps = {
-  id: string;
-  value: string;
-  type?: string;
-  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  isFocused?: boolean;
-  children: React.ReactNode;
-};
 
 const useStorageState = (
   key: string,
@@ -175,84 +152,5 @@ const App = () => {
   );
 };
 
-const SearchForm = ({
-  searchTerm,
-  onSearchInput,
-  onSearchSubmit,
-}: SearchFormProps) => (
-  <form onSubmit={onSearchSubmit}>
-    <InputWithLabel
-      id="search"
-      value={searchTerm}
-      onInputChange={onSearchInput}
-      isFocused
-    >
-      <strong>Search</strong>
-    </InputWithLabel>
-    <button type="submit" disabled={!searchTerm}>
-      Submit
-    </button>
-  </form>
-);
-
-const List = ({ list, onRemoveItem }: ListProps) => {
-  return (
-    <ul>
-      {list.map((item) => (
-        <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
-      ))}
-    </ul>
-  );
-};
-
-const Item = ({ item, onRemoveItem }: ItemProps) => {
-  return (
-    <li key={item.objectID}>
-      <span>
-        <a href={item.url}>{item.title}</a>
-      </span>
-      <span>{item.author}</span>
-      <span>{item.num_comments}</span>
-      <span>{item.points}</span>
-      <span>
-        <button type="button" onClick={() => onRemoveItem(item)}>
-          Dismiss
-        </button>
-      </span>
-    </li>
-  );
-};
-
-const InputWithLabel = ({
-  id,
-  type = "text",
-  value,
-  onInputChange,
-  children,
-  isFocused,
-}: InputWithLabelProps) => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
-
-  React.useEffect(() => {
-    if (isFocused && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isFocused]);
-
-  return (
-    <>
-      <label htmlFor={id}> {children} </label>
-      &nbsp;
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={onInputChange}
-        ref={inputRef}
-      />
-    </>
-  );
-};
-
 export default App;
-export { InputWithLabel, Item, List, SearchForm, storiesReducer };
+export { storiesReducer };

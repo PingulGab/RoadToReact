@@ -1,7 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import { describe, expect, it, Mock, vi } from "vitest";
-import App, { Item, SearchForm, storiesReducer } from "./App";
+import App, { storiesReducer } from "./App";
+import { Item } from "./List";
+import { SearchForm } from "./SearchForm";
 
 vi.mock("axios");
 const mockedAxiosGet = axios.get as Mock;
