@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import "./App.css";
+import Check from "./check.svg?react";
 
 const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
@@ -155,7 +156,7 @@ const Item = ({ item, onRemoveItem }) => {
           onClick={() => onRemoveItem(item)}
           className="button button_small"
         >
-          Dismiss
+          <Check height="18px" width="18px" />
         </button>
       </span>
     </li>
