@@ -255,3 +255,4 @@ const InputWithLabel = ({
 };
 
 export default App;
+export { InputWithLabel, Item, List, SearchForm, storiesReducer };
