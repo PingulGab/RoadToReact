@@ -53,6 +53,15 @@ const storiesReducer = (state, action) => {
   }
 };
 
+const getSumComments = (stories) => {
+  console.log("C");
+
+  return stories.data.reduce(
+    (results, value) => results + value.num_comments,
+    0
+  );
+};
+
 const App = () => {
   const [searchTerm, setSearchTerm] = useStorageState("search", "React");
   const [stories, dispatchStories] = React.useReducer(storiesReducer, {
@@ -95,9 +104,11 @@ const App = () => {
     });
   }, []);
 
+  const sumComments = React.useMemo(() => getSumComments(stories), [stories]);
+
   return (
     <div>
-      <h1>My Hacker Stories</h1>
+      <h1>My Hacker Stories with {sumComments} comments.</h1>
       <SearchForm
         searchTerm={searchTerm}
         onSearchInput={handleSearchInput}
