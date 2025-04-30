@@ -88,12 +88,12 @@ const App = () => {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
   };
 
-  const handleRemoveStory = (item) => {
+  const handleRemoveStory = React.useCallback((item) => {
     dispatchStories({
       type: "REMOVE_STORY",
       payload: item,
     });
-  };
+  }, []);
 
   return (
     <div>
@@ -131,7 +131,7 @@ const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
   </form>
 );
 
-const List = ({ list, onRemoveItem }) => {
+const List = React.memo(({ list, onRemoveItem }) => {
   return (
     <ul>
       {list.map((item) => (
@@ -139,7 +139,7 @@ const List = ({ list, onRemoveItem }) => {
       ))}
     </ul>
   );
-};
+});
 
 const Item = ({ item, onRemoveItem }) => {
   return (
