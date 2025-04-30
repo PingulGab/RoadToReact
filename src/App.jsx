@@ -2,13 +2,18 @@ import axios from "axios";
 import React from "react";
 
 const useStorageState = (key, initialState) => {
+  const isMounted = React.useRef(false);
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
 
   React.useEffect(() => {
-    localStorage.setItem(key, value);
-  }, [value]);
+    if (!isMounted.current) {
+      isMounted.current = true;
+    } else {
+      localStorage.setItem(key, value);
+    }
+  }, [value, key]);
 
   return [value, setValue];
 };
